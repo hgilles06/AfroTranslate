@@ -1,0 +1,2 @@
+include src/afrotranslate/links_models.csv
+include src/afrotranslate/models

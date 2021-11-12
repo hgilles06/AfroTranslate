@@ -1,0 +1,37 @@
+Metadata-Version: 2.1
+Name: AfroTranslate
+Version: 0.0.3
+Summary: This package allows you to obtain translations from Masakhane JoeyNMT based models. Masakhane is a grassroots research community aiming to revive and strengthen African languages through AI.
+Home-page: https://github.com/masakhane-io/masakhane-mt
+Author: Gilles HACHEME
+Author-email: gilles.hacheme@ai4innov.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENCE
+License-File: NOTICE
+
+# AfroTranslate
+
+This package allows you to obtain translations from Masakhane JoeyNMT based models with very few lines of code. Masakhane is a grassroots research community aiming to revive and strengthen African languages through AI.
+
+Available models can be found [here](https://github.com/masakhane-io/masakhane-mt/tree/master/benchmarks).
+
+Note: Please, install the cuda supported version of pytorch to use the GPU. Ex: pip install torch==1.8.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html.
+
+# Example
+
+from afrotranslate import MasakhaneTranslate
+
+## Translation using the English to Fon model
+translator = MasakhaneTranslate(model_name="en-fon")
+
+translator.translate("I love you so much!", n_best=1)
+
+'Un yí wǎn nú we tawun'
+
+

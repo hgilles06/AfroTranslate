@@ -1,0 +1,2 @@
+joeynmt==1.3
+googledrivedownloader==0.4
