@@ -37,3 +37,7 @@ translator.translate("I love you so much! Our love is very strong!", n_best=1)
 {'Sentence1': 'Un yí wǎn nú we tawun',
  'Sentence2': 'Wanyiyi mǐtɔn ɖò taji tawun'}
 
+
+#### Disclaimer: 
+
+This is a community research project and as such, this service is not a production system. The models are only trained using religious data. Therefore, it should not be used for official translations. 
