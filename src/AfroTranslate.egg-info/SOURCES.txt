@@ -1,0 +1,14 @@
+LICENCE
+MANIFEST.in
+NOTICE
+README.md
+pyproject.toml
+setup.py
+src/AfroTranslate.egg-info/PKG-INFO
+src/AfroTranslate.egg-info/SOURCES.txt
+src/AfroTranslate.egg-info/dependency_links.txt
+src/AfroTranslate.egg-info/requires.txt
+src/AfroTranslate.egg-info/top_level.txt
+src/afrotranslate/__init__.py
+src/afrotranslate/links_models.csv
+src/afrotranslate/translator.py

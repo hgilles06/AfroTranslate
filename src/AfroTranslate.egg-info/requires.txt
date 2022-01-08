@@ -1,0 +1,3 @@
+joeynmt==1.3
+googledrivedownloader==0.4
+spacy==3.2.1
