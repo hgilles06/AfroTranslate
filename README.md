@@ -9,7 +9,7 @@ Note: Please, install the cuda supported version of pytorch to use the GPU. Ex: 
 
 Here are some useful links:
 
-[Masakhane](https://www.masakhane.io/) Visit the Masakhane home page: 
+[Masakhane](https://www.masakhane.io/): Visit the Masakhane home page: 
 
 [Masakhane web](http://translate.masakhane.io/): Get translations using the Masakhane web application.
 
@@ -42,6 +42,6 @@ translator.translate("I love you so much! Our love is very strong!", n_best=1)
  'Sentence2': 'Wanyiyi mǐtɔn ɖò taji tawun'}
 
 
-#### Disclaimer: 
+# Disclaimer: 
 
 This is a community research project and as such, this service is not a production system. The models are only trained using religious data. Therefore, it should not be used for official translations. 
