@@ -8,9 +8,13 @@ Note: Please, install the cuda supported version of pytorch to use the GPU. Ex: 
 
 
 Here are some useful links:
+
 [Masakhane](https://www.masakhane.io/) Visit the Masakhane home page: 
+
 [Masakhane web](http://translate.masakhane.io/): Get translations using the Masakhane web application.
+
 [Masakhane Github](https://github.com/masakhane-io): Take a look at the community main projects here!
+
 [JoeyNMT Github](https://github.com/joeynmt/joeynmt): Get hands on JoeyNMT here!
 
 # Test it right now on [Colab](https://colab.research.google.com/drive/1_iqv6EMZ76Pkvmtb94ZxgDfIPGeaMP7-?usp=sharing)!
