@@ -20,19 +20,16 @@ import warnings
 from spacy.lang.en import English # updated
 
 
-
-
-
 class MasakhaneTranslate:
 
-        def __init__(self, model_name:str, version:str=None,  device: str = 'cpu'):
+        def __init__(self, model_path:str=None, model_name:str=None, version:str=None,  device: str = 'cpu'):
             """
             model_name: name of the model. See the list of the models (directory names) from https://github.com/masakhane-io/masakhane-mt/tree/master/benchmarks
             version: most of the models have several versions. Each version is provided as a subdirectory of the model's directory from https://github.com/masakhane-io/masakhane-mt/tree/master/benchmarks
             device: device to use for inference ("cpu" or "cuda")
             """
 
-            self.model, self.cfg, self.src_vocab, self.use_cuda = self.load_model(model_name, version=version, device=device)
+            self.model, self.cfg, self.src_vocab, self.use_cuda = self.load_model(model_path=model_path, model_name=model_name, version=version, device=device)
 
             """
     	    cfg: configuration dictionary
@@ -71,41 +68,71 @@ class MasakhaneTranslate:
             print(model_name, "downloaded!")
 
 
-        def load_model(self, model_name:str, version:str=None, device:str="cpu") -> torch.nn.Module:
+        def load_model(self, model_path:str=None, model_name:str=None, version:str=None, device:str="cpu") -> torch.nn.Module:
 
-            dest_dir = pkg_resources.resource_filename(f'afrotranslate', 'models')
-            model_dir = dest_dir+f"/{model_name}"
+            if model_name:
+                #Load publicly available Masakhane models
+                dest_dir = pkg_resources.resource_filename(f'afrotranslate', 'models')
+                model_dir = dest_dir+f"/{model_name}"
 
-            if not os.path.isdir(model_dir):
-                self.download_model(model_name)
+                if not os.path.isdir(model_dir):
+                    self.download_model(model_name)
 
-            if (version is None)or(version==""): #or(not os.path.isdir(model_dir+"/"+version)):
-                version = os.listdir(model_dir)[0]
-                print("As you don't provide any version we use this one by default:", version)
-                print("Here is the complete list of versions:", os.listdir(model_dir))
+                if (version is None)or(version==""): #or(not os.path.isdir(model_dir+"/"+version)):
+                    version = os.listdir(model_dir)[0]
+                    print("As you don't provide any version we use this one by default:", version)
+                    print("Here is the complete list of versions:", os.listdir(model_dir))
 
-            if (not version in os.listdir(model_dir)) : #subdir not in directory
-                first_element_in_dir = os.listdir(model_dir)[0]
-                if os.path.isdir(model_dir+"/"+first_element_in_dir):
-                    raise ValueError('This version does not exit. Please select between the following list:', os.listdir(model_dir))
-                else:
-                    warnings.warn("There is only one version for this model!")
-
-
-            if not os.path.isdir(model_dir+"/"+version): #if there is no subdirectory
-                version=""
+                if (not version in os.listdir(model_dir)) : #subdir not in directory
+                    first_element_in_dir = os.listdir(model_dir)[0]
+                    if os.path.isdir(model_dir+"/"+first_element_in_dir):
+                        raise ValueError('This version does not exit. Please select between the following list:', os.listdir(model_dir))
+                    else:
+                        warnings.warn("There is only one version for this model!")
 
 
-            model_dir = model_dir+"/"+version
-            cfg_file = model_dir+"/config.yaml"
-            ckpt=model_dir+"/model.ckpt"
+                if not os.path.isdir(model_dir+"/"+version): #if there is no subdirectory
+                    version=""
+
+                model_dir = model_dir+"/"+version
+                cfg_file = model_dir+"/config.yaml"
+                ckpt=model_dir+"/model.ckpt"
+
+            elif model_path:
+                if not os.path.exists(model_path):
+                    raise ValueError('Cannot locate model directory', model_path)
+                if not os.path.isdir(model_path):
+                    raise ValueError('Model path is not a directory', model_path)
+
+                model_dir = model_path
+                cfg_file = model_path+"/config.yaml"
+
+                ckpt_candidates = [i for i in os.listdir(model_path) if i.endswith('ckpt')]
+                if len(ckpt_candidates) == 0:
+                    raise ValueError('No checkpoint file under model directory', model_path)
+                elif len(ckpt_candidates) > 1:
+                    print("WARNING: More than one checkpoint under model directory. Taking first:", ckpt_candidates[0])
+
+                ckpt = os.path.join(model_dir, ckpt_candidates[0])
+
+            else:
+                raise ValueError('Neither model id nor model directory path specified!')
+
+            if not os.path.exists(cfg_file):
+                raise ValueError('Cannot locate config.yaml in model directory', model_dir)
 
             cfg = load_config(cfg_file)
-
 
             # read vocabs
             src_vocab_file = model_dir+ "/" +cfg["data"]["src_vocab"]
             trg_vocab_file = model_dir + "/" +cfg["data"]["trg_vocab"]
+
+            if not os.path.exists(src_vocab_file):
+                raise ValueError('Cannot locate vocab file %s in model directory', src_vocab_file)
+
+            if not os.path.exists(trg_vocab_file):
+                raise ValueError('Cannot locate vocab file %s in model directory', trg_vocab_file)
+
             src_vocab = Vocabulary(file=src_vocab_file)
             trg_vocab = Vocabulary(file=trg_vocab_file)
 

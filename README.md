@@ -26,6 +26,7 @@ pip install AfroTranslate
 
 ## Translation using the English to Fon model
 
+```
 from afrotranslate import MasakhaneTranslate
 
 translator = MasakhaneTranslate(model_name="en-fon")
@@ -33,20 +34,28 @@ translator = MasakhaneTranslate(model_name="en-fon")
 translator.translate("I love you so much!", n_best=1)
 
 'Un yí wǎn nú we tawun'
+```
+
+## Loading a model from specified directory
+
+```
+translator = MasakhaneTranslate(model_path="<directory-where-your-model-resides>")
+```
 
 ## Translating several sentences at once
 
 The models are trained on individual sentences, so we automatically detect sentence boundaries in inputs and translate them separately. The output shows alternatives for each of them.
 
+```
 translator.translate("I love you so much! Our love is very strong!", n_best=1)
 
 {'Sentence1': 'Un yí wǎn nú we tawun',
  'Sentence2': 'Wanyiyi mǐtɔn ɖò taji tawun'}
-
+```
 
 # Disclaimer
 
-This is a community research project and as such, this service is not a production system. The models are only trained using religious data. Therefore, it should not be used for official translations. 
+This is a community research project and as such, this service is not a production system. The models are only trained using religious data. Therefore, it should not be used for official translations.
 
 # Acknowledgement
 
